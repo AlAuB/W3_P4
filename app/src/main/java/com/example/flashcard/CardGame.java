@@ -127,7 +127,6 @@ public class CardGame extends AppCompatActivity {
         outState.putString("input", input.getText().toString());
         outState.putInt("correct", correct);
         outState.putInt("count", counter);
-        System.out.println("clickable1: " + isClickable);
         outState.putBoolean("clickable", isClickable);
         super.onSaveInstanceState(outState);
     }
@@ -140,7 +139,6 @@ public class CardGame extends AppCompatActivity {
         sign.setText(savedInstanceState.getString("sign"));
         input.setText(savedInstanceState.getString("input"));
         generator.setEnabled(savedInstanceState.getBoolean("clickable"));
-        System.out.println("clickable2: " + savedInstanceState.getBoolean("clickable"));
         correct = savedInstanceState.getInt("correct");
         counter = savedInstanceState.getInt("count");
     }
