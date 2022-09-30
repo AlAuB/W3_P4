@@ -15,7 +15,7 @@ public class CardGame extends AppCompatActivity {
 
     TextView num1, num2, sign;
     EditText input;
-    Button generator, submit;
+    Button generator, submit, restart;
     Random rand;
     int correct, counter;
     boolean isClickable;
@@ -31,10 +31,11 @@ public class CardGame extends AppCompatActivity {
         input = findViewById(R.id.input);
         generator = findViewById(R.id.generator);
         submit = findViewById(R.id.submit_result);
+        restart = findViewById(R.id.restart);
         rand = new Random();
         correct = 0;
         counter = 0;
-        isClickable = true;
+        isClickable = false;
 
         generator.setOnClickListener(view -> {
             update();
@@ -55,13 +56,7 @@ public class CardGame extends AppCompatActivity {
                         Toast.makeText(CardGame.this,
                                 correct + " out of 10",
                                 Toast.LENGTH_LONG).show();
-                        counter = 0;
-                        correct = 0;
-                        num1.setText("");
-                        num2.setText("");
-                        sign.setText("");
-                        generator.setEnabled(true);
-                        isClickable = true;
+                        reset();
                     } else {
                         update();
                     }
@@ -70,6 +65,24 @@ public class CardGame extends AppCompatActivity {
             } catch (Exception ignored) {
             }
         });
+
+        restart.setOnClickListener(view -> {
+            reset();
+            Toast.makeText(CardGame.this,
+                    "Game Restart",
+                    Toast.LENGTH_LONG).show();
+        });
+    }
+
+    private void reset() {
+        counter = 0;
+        correct = 0;
+        num1.setText("");
+        num2.setText("");
+        sign.setText("");
+        input.setText("");
+        generator.setEnabled(true);
+        isClickable = true;
     }
 
     private int randomNum(int max) {
@@ -114,6 +127,7 @@ public class CardGame extends AppCompatActivity {
         outState.putString("input", input.getText().toString());
         outState.putInt("correct", correct);
         outState.putInt("count", counter);
+        System.out.println("clickable1: " + isClickable);
         outState.putBoolean("clickable", isClickable);
         super.onSaveInstanceState(outState);
     }
@@ -126,6 +140,7 @@ public class CardGame extends AppCompatActivity {
         sign.setText(savedInstanceState.getString("sign"));
         input.setText(savedInstanceState.getString("input"));
         generator.setEnabled(savedInstanceState.getBoolean("clickable"));
+        System.out.println("clickable2: " + savedInstanceState.getBoolean("clickable"));
         correct = savedInstanceState.getInt("correct");
         counter = savedInstanceState.getInt("count");
     }
